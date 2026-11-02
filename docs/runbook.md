@@ -4,16 +4,19 @@
 
 ## Start locally / Локално стартиране
 
-TODO
+docker build -t notes-api:0.3.0 .
+docker run -d -p 8000:8000 --name notes-app-safer notes-api:0.3.0
 
 ## Check that it works / Проверка, че работи
 
-TODO: which address do you open and what should you see? / кой адрес отваряте и какво трябва да видите?
+Open http://localhost:8000/health (or your codespace port 8000 link with /health) and you should see {"status":"ok"}
 
 ## Run the tests / Тестове
 
-TODO
+pytest
 
 ## When something breaks / Когато нещо се счупи
 
-TODO: the first three things you check. / първите три неща, които проверявате.
+1. Check container status: docker ps -a
+2. Check container logs: docker logs <container-name>
+3. Check health status: docker inspect --format '{{.State.Health.Status}}' <container-name>
