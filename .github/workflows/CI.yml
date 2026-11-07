@@ -1,19 +1,12 @@
-name: CI
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-
-jobs:
-  test:
+build:
+    needs: test
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
         with:
-          python-version: "3.12"
-          cache: pip
-      - run: pip install -r requirements-dev.txt
-      - run: ruff check .
-      - run: pytest -v
+          context: .
+          push: false
